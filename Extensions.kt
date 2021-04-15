@@ -25,12 +25,12 @@ suspend fun FusedLocationProviderClient.awaitLastLocation() =
  this method just makes your code smaller , now in your activity you don't have to say
  ContextCompat.getDrawble(this,R.id.your_drawble) just say getAsDrawble(R.id.your_drawble)
 **/
-Context.getAsDrawble(id:Int) = ContextCompat.getDrawble(this,id)
+fun Context.getAsDrawble(id:Int) = ContextCompat.getDrawble(this,id)
 
 /**
 similar to above to use in frament without using requireActivity().getAsDrawble(Int) 
 **/
 
-Fragment.getAsDrawble(id:Int) = ContextCompat.getDrawble(this.requireActivity(),id)
+fun Fragment.getAsDrawble(id:Int) = ContextCompat.getDrawble(this.requireActivity(),id)
 
 
