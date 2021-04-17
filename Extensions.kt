@@ -33,4 +33,29 @@ similar to above to use in frament without using requireActivity().getAsDrawble(
 
 fun Fragment.getAsDrawable(id:Int) = ContextCompat.getDrawable(this.requireActivity(),id)
 
+@ExperimentalCoroutinesApi
+@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+fun Context.networkAvailableFlow(): Flow<Boolean> = callbackFlow {
+    val callback =
+        object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                offer(true)
+            }
+
+            override fun onLost(network: Network) {
+                offer(false)
+            }
+        }
+    val manager = getSystemService(Context.CONNECTIVITY_SERVICE)
+            as ConnectivityManager
+    manager.registerNetworkCallback(NetworkRequest.Builder().run {
+        addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+        build()
+    }, callback)
+
+    awaitClose { 
+        manager.unregisterNetworkCallback(callback)
+    }
+}
+
 
