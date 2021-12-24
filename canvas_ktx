@@ -1,0 +1,15 @@
+
+fun Canvas.drawPolygon(sides: Int, radius: Float) {
+  val path = Path()
+  val angle = 2.0 * Math.PI / sides
+  path.moveTo(
+      cx + (radius * Math.cos(0.0)).toFloat(),
+      cy + (radius * Math.sin(0.0)).toFloat())
+  for (i in 1 until sides) {
+    path.lineTo(
+        cx + (radius * Math.cos(angle * i)).toFloat(),
+        cy + (radius * Math.sin(angle * i)).toFloat())
+    }
+  path.close()
+  drawPath(path)
+}
